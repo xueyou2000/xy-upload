@@ -10,7 +10,7 @@
 
 # xy-upload
 
-基于`React Hooks` + `typescript`的基础组件
+上传组件
 
 ## 安装
 
@@ -21,26 +21,37 @@ yarn add xy-upload
 
 ## 使用例子
 
-```ts
+```tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import XyUpload from "xy-upload";
-ReactDOM.render(<XyUpload />, container);
+import Upload from "xy-upload";
+ReactDOM.render(
+    <Upload action="/upload.do">
+        <button>上传</button>
+    </Upload>,
+    container
+);
 ```
 
 ## API
 
-| 属性     | 说明                                                               | 类型           | 默认值    |
-| -------- | ------------------------------------------------------------------ | -------------- | --------- |
-| ghost    | 幽灵属性，使按钮背景透明                                           | boolean        | false     |
-| long     | 是否长按钮                                                         | boolean        | false     |
-| icon     | 设置按钮的图标类型                                                 | IconDefinition | -         |
-| loading  | 设置按钮载入状态                                                   | boolean        | `false`   |
-| disabled | 按钮失效状态                                                       | boolean        | `false`   |
-| shape    | 设置按钮形状，可选值为 `circle` 或者不设                           | string         | -         |
-| size     | 设置按钮大小，可选值为 `small` `large` 或者不设                    | string         | `default` |
-| type     | 设置按钮类型，可选值为 `primary` `dashed` `text` `danger` 或者不设 | string         | -         |
-| onClick  | `click` 事件的 handler                                             | function       | -         |
+| 属性            | 说明                                                    | 类型                                                               | 默认值  |
+| --------------- | ------------------------------------------------------- | ------------------------------------------------------------------ | ------- |
+| disabled        | 是否禁用                                                | boolean                                                            | `false` |
+| accept          | 上传文件类型                                            | string                                                             | -       |
+| multiple        | 是否多选                                                | boolean                                                            | `false` |
+| beforeUpload    | 上传前检查, 返回 false 或者 Promise.reject() 则拒绝上传 | BeforeUploadFunc, BeforeUploadPromise                              | -       |
+| directory       | 是否支持上传目录内所有文件(不支持 IE)                   | boolean                                                            | `false` |
+| customRequest   | 自定义上传                                              | (options: UploadOptions) => UploadReturn                           | -       |
+| name            | 服务器接受文件名称                                      | string                                                             | `file`  |
+| action          | 上传地址                                                | string, Function                                                   | -       |
+| data            | 附加数据                                                | object, Function                                                   | -       |
+| withCredentials | 是否启用 withCredentials                                | boolean                                                            | `false` |
+| headers         | 附加请求头                                              | object                                                             | -       |
+| onStart         | 开始上传                                                | (file: FileExtend) => void                                         | -       |
+| onSuccess       | 成功事件                                                | (file: FileExtend, response: ResType, xhr: XMLHttpRequest) => void | -       |
+| onError         | 失败事件                                                | (file: FileExtend, error: Error, response?: ResType) => void       | -       |
+| onProgress      | 上传进度事件                                            | (file: FileExtend, percent: number, event: ProgressEvent) => void  | -       |
 
 ## 开发
 
