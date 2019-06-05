@@ -9,7 +9,7 @@ import httpUpload from "./HttpUpload";
 const HideStyle: React.CSSProperties = { display: "none" };
 
 function Upload(props: UploadProps) {
-    const { prefixCls = "xy-upload", className, directory, style, accept, beforeUpload, customRequest, disabled, multiple = false, name, withCredentials, headers, onStart, onSuccess, onError, onProgress, children } = props;
+    const { prefixCls = "xy-upload", className, directory, style, accept, beforeUpload, customRequest, disabled, multiple = false, name = "file", withCredentials, headers, onStart, onSuccess, onError, onProgress, children } = props;
     const ref = useRef(null);
     // 唯一得 uid，用于重置input.files, 让其触发后续同一文件得onChange事件
     const [uid, setUid] = useState(createUid());
