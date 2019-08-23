@@ -9,7 +9,25 @@ import httpUpload from "./HttpUpload";
 const HideStyle: React.CSSProperties = { display: "none" };
 
 function Upload(props: UploadProps) {
-    const { prefixCls = "xy-upload", className, directory, style, accept, beforeUpload, customRequest, disabled, multiple = false, name = "file", withCredentials, headers, onStart, onSuccess, onError, onProgress, children } = props;
+    const {
+        prefixCls = "xy-upload",
+        className,
+        directory,
+        style,
+        accept,
+        beforeUpload,
+        customRequest,
+        disabled,
+        multiple = false,
+        name = "file",
+        withCredentials,
+        headers,
+        onStart,
+        onSuccess,
+        onError,
+        onProgress,
+        children,
+    } = props;
     const ref = useRef(null);
     // 唯一得 uid，用于重置input.files, 让其触发后续同一文件得onChange事件
     const [uid, setUid] = useState(createUid());
@@ -85,7 +103,7 @@ function Upload(props: UploadProps) {
                     if (onProgress) {
                         onProgress(file, percent, event);
                     }
-                }
+                },
             });
             reqs.set(uid, res);
         });
@@ -155,17 +173,18 @@ function Upload(props: UploadProps) {
               onKeyDown,
               onDrop: onFileDrop,
               onDragOver: onFileDrop,
-              tabIndex: 0
+              tabIndex: 0,
           };
     const directoryProps: any = directory
         ? {
               directory: "directory",
-              webkitdirectory: "webkitdirectory"
+              webkitdirectory: "webkitdirectory",
           }
         : {};
 
     return (
         <span className={classNames(prefixCls, className)} style={style} {...events}>
+            <div name="xx" />
             <input type="file" key={uid} ref={ref} style={HideStyle} accept={accept} name={name} onChange={onChange} multiple={multiple} {...directoryProps} />
             {children}
         </span>
