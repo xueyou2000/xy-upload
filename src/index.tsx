@@ -184,7 +184,6 @@ function Upload(props: UploadProps) {
 
     return (
         <span className={classNames(prefixCls, className)} style={style} {...events}>
-            <div name="xx" />
             <input type="file" key={uid} ref={ref} style={HideStyle} accept={accept} name={name} onChange={onChange} multiple={multiple} {...directoryProps} />
             {children}
         </span>
