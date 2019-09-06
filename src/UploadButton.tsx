@@ -2,9 +2,9 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
 import React, { useState } from "react";
-import { FileExtend, UploadButtonProps, UploadResult } from "./interface";
+import { FileExtend, UploadButtonProps, UploadResult, UploadFrameProps } from "./interface";
 import Upload from "./Upload";
-import UploadFrame, { UploadFrameProps } from "./UploadFrame";
+import UploadFrame from "./UploadFrame";
 import { isImageUrl } from "./utils";
 
 function UploadButton(props: UploadButtonProps & UploadFrameProps) {
@@ -21,50 +21,65 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
         onProgress,
         onRemove,
         onView,
+        btnMode = false,
+        test,
         ...rest
     } = props;
     const [result, setResult] = useState<UploadResult>({
         status: "ready",
     });
 
+    console.log("render --- test", test);
+
     function onStartHandle(file: FileExtend) {
-        setResult({
-            status: "uploading",
-            file: file,
-            thumbnail: URL.createObjectURL(file),
-            percent: 0,
-        });
+        if (!btnMode) {
+            setResult({
+                status: "uploading",
+                file: file,
+                thumbnail: URL.createObjectURL(file),
+                percent: 0,
+            });
+        }
+        console.log("开始上传", test);
         if (onStart) {
             onStart(file);
         }
     }
 
     function onSuccessHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
-        setResult({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
+        if (!btnMode) {
+            setResult({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
+        }
+        console.log("上传成功", test);
         if (onSuccess) {
             onSuccess(file, response, xhr);
         }
     }
 
     function onErrorHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
-        setResult({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
+        if (!btnMode) {
+            setResult({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
+        }
         if (onError) {
             onError(file, response, xhr);
         }
     }
 
     function onProgressHandle(file: FileExtend, percent: number, event: ProgressEvent) {
-        setResult({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
+        if (!btnMode) {
+            setResult({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
+        }
         if (onProgress) {
             onProgress(file, percent, event);
         }
     }
 
     function onRemoveHandle(result: UploadResult) {
-        setResult({
-            status: "ready",
-        });
-
+        if (!btnMode) {
+            setResult({
+                status: "ready",
+            });
+        }
         if (onRemove) {
             onRemove(result);
         }

@@ -2,48 +2,7 @@ import React, { useRef, useState } from "react";
 import classNames from "classnames";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFileUpload, faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { FileExtend, UploadStatus, UploadResult } from "./interface";
-
-export type UploadActionClick = (result?: UploadResult) => void;
-
-export interface UploadFrameProps {
-    /**
-     * 附加类名
-     */
-    prefixCls?: string;
-    /**
-     * 根节点的附加类名
-     */
-    className?: string;
-    /**
-     * 内联样式
-     */
-    style?: React.CSSProperties;
-    /**
-     * 内容
-     */
-    children?: React.ReactNode;
-    /**
-     * 是否为图片
-     */
-    isImg?: boolean;
-    /**
-     * 上传结果
-     */
-    result?: UploadResult;
-    /**
-     * 自定义操作按钮
-     */
-    icons?: (result?: UploadResult, onView?: UploadActionClick, onRemove?: UploadActionClick) => React.ReactNode;
-    /**
-     * 内置查看按钮事件
-     */
-    onView?: UploadActionClick;
-    /**
-     * 内置删除按钮事件
-     */
-    onRemove?: UploadActionClick;
-}
+import { UploadActionClick, UploadFrameProps, UploadResult } from "./interface";
 
 function UploadFrame(props: UploadFrameProps) {
     const { prefixCls = "upload-frame", className, style, isImg = false, result = {}, icons, onView, onRemove } = props;

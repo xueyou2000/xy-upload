@@ -1,22 +1,7 @@
 [
     {
-        "name": "Simple",
-        "title": "简单例子",
-        "desc": "包裹上传元素, 让其点击后选择上传的文件. (打开控制台查看进度)"
-    },
-    {
-        "name": "Directory",
-        "title": "上传目录中所有文件",
-        "desc": "开启 directory 属性后, 可以拖拽目录, 上传目录内所有文件."
-    },
-    {
-        "name": "UploadButton",
-        "title": "上传按钮",
-        "desc": "包裹上传组件"
-    },
-    {
-        "name": "UploadFrame",
-        "title": "文件相框",
-        "desc": "显示上传文件的状态"
+        "name": "UploadList",
+        "title": "上传列表",
+        "desc": "管理多个上传"
     }
 ]

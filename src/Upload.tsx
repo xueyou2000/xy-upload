@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import classNames from "classnames";
-import { UploadProps, UploadReturn, FileExtend } from "./interface";
+import { UploadProps, UploadReturn, FileExtend, UploadOptions } from "./interface";
 import { attrAccept, createUid, getValue } from "./utils";
 import traverseFileTree from "./TraverseFileTree";
 import { useUnmount } from "utils-hooks";
@@ -31,8 +31,6 @@ function Upload(props: UploadProps) {
     const ref = useRef(null);
     // 唯一得 uid，用于重置input.files, 让其触发后续同一文件得onChange事件
     const [uid, setUid] = useState(createUid());
-    // 当前正在上传的 UploadReturn
-    const reqsRef = useRef<Map<string, UploadReturn>>(new Map());
 
     function uploadFiles(files: FileList | File[]) {
         if (disabled) {
@@ -70,15 +68,13 @@ function Upload(props: UploadProps) {
     }
 
     function postFile(file: FileExtend) {
-        const reqs = reqsRef.current;
         const data = getValue(props.data, [file]);
         const action = getValue(props.action, [file]);
 
         return new Promise((resolve, reject) => {
-            const { uid } = file;
             const request = customRequest || httpUpload;
             onStart(file);
-            const res = request({
+            request({
                 file,
                 data,
                 action,
@@ -86,14 +82,12 @@ function Upload(props: UploadProps) {
                 filename: name,
                 withCredentials,
                 onSuccess: (response, xhr) => {
-                    reqs.delete(uid);
                     if (onSuccess) {
                         onSuccess(file, response, xhr);
                     }
                     resolve(response);
                 },
                 onError: (error, response) => {
-                    reqs.delete(uid);
                     if (onError) {
                         onError(file, error, response);
                     }
@@ -105,7 +99,6 @@ function Upload(props: UploadProps) {
                     }
                 },
             });
-            reqs.set(uid, res);
         });
     }
 

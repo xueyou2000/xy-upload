@@ -161,4 +161,51 @@ export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
      * 上传标题
      */
     title?: React.ReactNode;
+    /**
+     * 是否仅按钮模式
+     * 不显示上传状态
+     */
+    btnMode?: boolean;
+    test?: any;
+}
+
+export type UploadActionClick = (result?: UploadResult) => void;
+
+export interface UploadFrameProps {
+    /**
+     * 附加类名
+     */
+    prefixCls?: string;
+    /**
+     * 根节点的附加类名
+     */
+    className?: string;
+    /**
+     * 内联样式
+     */
+    style?: React.CSSProperties;
+    /**
+     * 内容
+     */
+    children?: React.ReactNode;
+    /**
+     * 是否为图片
+     */
+    isImg?: boolean;
+    /**
+     * 上传结果
+     */
+    result?: UploadResult;
+    /**
+     * 自定义操作按钮
+     */
+    icons?: (result?: UploadResult, onView?: UploadActionClick, onRemove?: UploadActionClick) => React.ReactNode;
+    /**
+     * 内置查看按钮事件
+     */
+    onView?: UploadActionClick;
+    /**
+     * 内置删除按钮事件
+     */
+    onRemove?: UploadActionClick;
 }

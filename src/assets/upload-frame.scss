@@ -19,6 +19,7 @@ $UploadFrame: "upload-frame";
     position: relative;
     width: 104px;
     height: 104px;
+    box-sizing: border-box;
 }
 .#{$UploadFrame}_info {
     transition: background-color 0.3s;
@@ -172,5 +173,12 @@ $UploadFrame: "upload-frame";
     to {
         opacity: 0;
         width: 100%;
+    }
+}
+
+.upload-list {
+    .#{$UploadFrame} {
+        margin-right: 8px;
+        margin-bottom: 8px;
     }
 }
