@@ -1,11 +1,11 @@
 import React from "react";
-import { Upload } from "../src";
+import { UploadButton } from "../src";
 import { FileExtend } from "../src/interface";
 
 export default function() {
     function beforeUpload(file: FileExtend) {
         console.log("即将上传文件", file);
-        return true;
+        return Promise.resolve();
     }
 
     function onStart(file: FileExtend) {
@@ -26,18 +26,21 @@ export default function() {
 
     return (
         <div>
-            <Upload
-                action="/upload.do"
-                data={{ a: 1, b: 2 }}
-                headers={{ authorization: "xxx" }}
+            <UploadButton
+                action="/boss/file/file/uploadFile"
+                data={{ busiType: "COMPANY_ENTER_NET" }}
+                // headers={{
+                //     authorization:
+                //         "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODcwMTAwMjU4NyIsIm93bmVyUm9sZSI6IkJPU1MiLCJ1c2Vybm8iOiJCT1NTLTEwMDAwMDAwMCIsImlmQmFzZSI6IlRSVUUiLCJpZCI6MSwiZXhwIjoxNTY3ODI4MDc0LCJpYXQiOjE1Njc3NDE2NzR9.orPs_RCziZVtjpufG3RUkboW51nf6MJuK6PqOam7sLvVig9JQGqOW19xWgNKDwnuvfQBPgWOrcCTn3VpJ9vPBw",
+                // }}
                 beforeUpload={beforeUpload}
                 onStart={onStart}
                 onSuccess={onSuccess}
                 onError={onError}
                 onProgress={onProgress}
             >
-                <button>上传</button>
-            </Upload>
+                <p>商户身份证正面</p>
+            </UploadButton>
         </div>
     );
 }

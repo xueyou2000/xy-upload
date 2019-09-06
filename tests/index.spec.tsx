@@ -1,13 +1,13 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
-import Upload from "../src";
+import { Upload } from "../src";
 
 describe("Upload", () => {
     test("render", () => {
         const wrapper = render(
             <Upload accept="image/gif, image/jpeg, image/png" name="file2">
                 <button>上传</button>
-            </Upload>
+            </Upload>,
         );
         const btn = wrapper.getByText("上传");
         const input = btn.previousElementSibling as HTMLInputElement;

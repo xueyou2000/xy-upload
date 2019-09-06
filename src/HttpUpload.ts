@@ -5,7 +5,7 @@ const DefaultOptions: UploadOptions = {
     file: null,
     filename: "file",
     withCredentials: false,
-    headers: {}
+    headers: {},
 };
 
 /**
@@ -13,6 +13,9 @@ const DefaultOptions: UploadOptions = {
  */
 export default function upload<T>(options: UploadOptions<T>): UploadReturn {
     const opt = Object.assign({}, DefaultOptions, options);
+    if (!opt.headers) {
+        opt.headers = {};
+    }
     const xhr = new XMLHttpRequest();
 
     // 上传数据
@@ -23,6 +26,8 @@ export default function upload<T>(options: UploadOptions<T>): UploadReturn {
         });
     }
     formData.append(opt.filename, opt.file);
+
+    xhr.open("post", opt.action, true);
 
     // 事件
     xhr.onload = () => {
@@ -36,6 +41,10 @@ export default function upload<T>(options: UploadOptions<T>): UploadReturn {
         opt.onError(new UploadError(`upload fail ${opt.action}`, opt.action, xhr.status), tryGetResponse(xhr));
     };
 
+    xhr.onabort = (ev: ProgressEvent) => {
+        console.log("中断", ev);
+    };
+
     if (opt.onProgress && xhr.upload) {
         xhr.upload.onprogress = (e) => {
             let percent = 0;
@@ -46,7 +55,6 @@ export default function upload<T>(options: UploadOptions<T>): UploadReturn {
         };
     }
 
-    xhr.open("post", opt.action, true);
     if (opt.withCredentials && "withCredentials" in xhr) {
         xhr.withCredentials = true;
     }
@@ -65,9 +73,9 @@ export default function upload<T>(options: UploadOptions<T>): UploadReturn {
     xhr.send(formData);
 
     return {
-        abort() {
-            xhr.abort();
-        }
+        abort: () => {
+            // xhr.abort();
+        },
     };
 }
 

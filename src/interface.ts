@@ -1,4 +1,3 @@
-
 export interface UploadReturn {
     abort: Function;
 }
@@ -47,8 +46,34 @@ export interface UploadOptions<ResType = any> {
     onProgress?: (percent: number, event: ProgressEvent) => void;
 }
 
-type BeforeUploadFunc = (file: FileExtend, fileList: FileExtend[]) => boolean | void;
-type BeforeUploadPromise = (file: FileExtend, fileList: FileExtend[]) => Promise<any>;
+export type BeforeUploadFunc = (file: FileExtend, fileList: FileExtend[]) => boolean;
+export type BeforeUploadPromise = (file: FileExtend, fileList: FileExtend[]) => boolean | Promise<any>;
+
+export type UploadStatus = "ready" | "uploading" | "success" | "error";
+
+export interface UploadResult {
+    /**
+     * 上传响应
+     */
+    response?: any;
+    /**
+     * 缩略图
+     */
+    thumbnail?: string;
+    /**
+     * 文件
+     */
+    file?: FileExtend;
+    /**
+     * 进度
+     * 0~100
+     */
+    percent?: number;
+    /**
+     * 上传状态
+     */
+    status?: UploadStatus;
+}
 
 export interface UploadProps<ResType = any> {
     /**
@@ -81,9 +106,9 @@ export interface UploadProps<ResType = any> {
     multiple?: boolean;
     /**
      * 上传前检查
-     * @description 返回 false 或者 Promise.reject() 则拒绝上传
+     * @description 返回 Promise.reject() 则拒绝上传
      */
-    beforeUpload?: BeforeUploadFunc | BeforeUploadPromise;
+    beforeUpload?: BeforeUploadPromise;
     /**
      * 是否支持上传目录内所有文件
      * @description 不支持IE
@@ -129,4 +154,11 @@ export interface UploadProps<ResType = any> {
      * 上传进度事件
      */
     onProgress?: (file: FileExtend, percent: number, event: ProgressEvent) => void;
+}
+
+export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
+    /**
+     * 上传标题
+     */
+    title?: React.ReactNode;
 }

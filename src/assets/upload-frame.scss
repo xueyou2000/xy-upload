@@ -1,0 +1,176 @@
+$UploadFrame: "upload-frame";
+
+.#{$UploadFrame} {
+    display: inline-block;
+    position: relative;
+
+    &:hover {
+        .#{$UploadFrame}_info:before,
+        .#{$UploadFrame}_actions {
+            opacity: 1;
+        }
+    }
+}
+.#{$UploadFrame}_wrapper {
+    display: inline-block;
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    position: relative;
+    width: 104px;
+    height: 104px;
+}
+.#{$UploadFrame}_info {
+    transition: background-color 0.3s;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        z-index: 1;
+        background-color: rgba(0, 0, 0, 0.5);
+        transition: all 0.3s;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+}
+.#{$UploadFrame}_thumbnail {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: static;
+    font-size: 36px;
+    background: linear-gradient(0deg, #efe9e9 0%, #cfcfd0 100%);
+    border-radius: 4px;
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+}
+.#{$UploadFrame}_actions {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+    white-space: nowrap;
+    opacity: 0;
+    transition: all 0.3s;
+    color: #fff;
+}
+.#{$UploadFrame}_action {
+    z-index: 4;
+    transition: all 0.3s;
+    cursor: pointer;
+    font-size: 16px;
+    width: 16px;
+    color: #fff;
+    margin: 0 8px;
+
+    &:hover {
+        color: #4ba9ff;
+    }
+}
+.#{$UploadFrame}_text {
+    text-align: center;
+}
+.#{$UploadFrame}_badge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 4px 8px;
+    color: #fff;
+    background: #19be6b;
+    font-size: 12px;
+    z-index: 5;
+    border-radius: 0 0 5px;
+}
+
+.#{$UploadFrame}-status-error {
+    .#{$UploadFrame}_wrapper {
+        border-color: #f5222d;
+    }
+    .#{$UploadFrame}_badge {
+        background: #f5222d;
+    }
+    .#{$UploadFrame}_text {
+        color: #f5222d;
+    }
+}
+
+.#{$UploadFrame}-status-uploading {
+    .#{$UploadFrame}_badge {
+        background: #faad14;
+    }
+    .#{$UploadFrame}_info:before,
+    .#{$UploadFrame}_actions {
+        opacity: 1;
+    }
+}
+
+.progress-position {
+    position: absolute;
+    width: 75%;
+    top: 50%;
+    left: 14%;
+    z-index: 5;
+}
+.progress-outer {
+    display: inline-block;
+    width: 100%;
+    padding-right: calc(2em + 8px);
+    margin-right: calc(-2em - 8px);
+
+    .progress-inner {
+        display: inline-block;
+        width: 100%;
+        background-color: #f5f5f5;
+        border-radius: 100px;
+        vertical-align: middle;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .progress-bg {
+        width: 0;
+        height: 4px;
+        border-radius: 100px;
+        background-color: #4ba9ff;
+        transition: all 0.4s cubic-bezier(0.08, 0.82, 0.17, 1) 0s;
+        position: relative;
+
+        &::before {
+            content: "";
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #fff;
+            border-radius: 10px;
+            animation: progress-active 2.4s cubic-bezier(0.23, 1, 0.32, 1) infinite;
+        }
+    }
+}
+
+@keyframes progress-active {
+    0% {
+        opacity: 0.1;
+        width: 0;
+    }
+
+    20% {
+        opacity: 0.5;
+        width: 0;
+    }
+
+    to {
+        opacity: 0;
+        width: 100%;
+    }
+}

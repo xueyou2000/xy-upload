@@ -24,12 +24,12 @@ yarn add xy-upload
 ```tsx
 import React from "react";
 import ReactDOM from "react-dom";
-import Upload from "xy-upload";
+import { Upload } from "xy-upload";
 ReactDOM.render(
     <Upload action="/upload.do">
         <button>上传</button>
     </Upload>,
-    container
+    container,
 );
 ```
 
