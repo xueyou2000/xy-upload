@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback, useEffect } from "react";
 import classNames from "classnames";
 import { FileExtend, UploadButtonProps, UploadResult, UploadFrameProps, UploadProps } from "./interface";
-import { useControll, useMount, useForceUpdate } from "utils-hooks";
+import { useControll, useMount, DefineDefaultValue, useForceUpdate } from "utils-hooks";
 import { UploadFrame } from ".";
 import { isImageUrl } from "./utils";
 import UploadButton from "./UploadButton";
@@ -60,32 +60,40 @@ function UploadList(props: UploadListProps) {
         onProgress,
         ...rest
     } = props;
-    const [list, setList, isControll] = useControll<UploadResult[]>(props, "value", "defaultValue", []);
-    const listRef = useRef([]);
-
+    const listRef = useRef<UploadResult[]>(DefineDefaultValue(props, "value", "defaultValue") || []);
+    const list = listRef.current;
+    // const [list, setList] = useState<UploadResult[]>(listRef.current);
+    const update = useForceUpdate();
     function changeList(d: UploadResult[]) {
         listRef.current = d;
-        if (!isControll) {
-            setList(d);
-        }
+        // setList(d);
+        update();
         if (onChange) {
             onChange(d);
         }
     }
 
+    useEffect(() => {
+        if (value) {
+            listRef.current = value;
+            // setList(value);
+        }
+    }, [value]);
+
     function onStartHandle(file: FileExtend) {
-        changeList([...list, { status: "uploading", file: file, thumbnail: URL.createObjectURL(file), percent: 0 }]);
+        const latestList = listRef.current;
+        changeList([...latestList, { status: "uploading", file: file, thumbnail: URL.createObjectURL(file), percent: 0 }]);
         if (onStart) {
             onStart(file);
         }
     }
 
     function onSuccessHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
-        const index = list.findIndex((x) => x.file.uid === file.uid);
+        const latestList = listRef.current;
+        const index = latestList.findIndex((x) => x.file.uid === file.uid);
         if (index !== -1) {
-            list[index] = { file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response };
-            // list.splice(index, 1, { file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
-            changeList(list);
+            latestList.splice(index, 1, { file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
+            changeList(latestList);
         }
         if (onSuccess) {
             onSuccess(file, response, xhr);
@@ -93,11 +101,11 @@ function UploadList(props: UploadListProps) {
     }
 
     function onErrorHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
-        const index = list.findIndex((x) => x.file.uid === file.uid);
+        const latestList = listRef.current;
+        const index = latestList.findIndex((x) => x.file.uid === file.uid);
         if (index !== -1) {
-            // list[index] = { file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response };
-            list.splice(index, 1, { file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
-            changeList(list);
+            latestList[index] = { file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response };
+            changeList(latestList);
         }
         if (onError) {
             onError(file, response, xhr);
@@ -105,11 +113,11 @@ function UploadList(props: UploadListProps) {
     }
 
     function onProgressHandle(file: FileExtend, percent: number, event: ProgressEvent) {
-        const index = list.findIndex((x) => x.file.uid === file.uid);
+        const latestList = listRef.current;
+        const index = latestList.findIndex((x) => x.file.uid === file.uid);
         if (index !== -1) {
-            // listRef.current[index] = { file, thumbnail: URL.createObjectURL(file), status: "uploading", percent };
-            list.splice(index, 1, { file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
-            changeList(list);
+            latestList[index] = { file, thumbnail: URL.createObjectURL(file), status: "uploading", percent };
+            changeList(latestList);
         }
         if (onProgress) {
             onProgress(file, percent, event);
@@ -117,10 +125,11 @@ function UploadList(props: UploadListProps) {
     }
 
     function onRemoveHandle(result: UploadResult) {
-        const i = list.findIndex((x) => x.file.uid === result.file.uid);
+        const latestList = listRef.current;
+        const i = latestList.findIndex((x) => x.file.uid === result.file.uid);
         if (i !== -1) {
-            list.splice(i, 1);
-            changeList(list);
+            latestList.splice(i, 1);
+            changeList(latestList);
         }
         if (onRemove) {
             onRemove(result);
@@ -129,8 +138,6 @@ function UploadList(props: UploadListProps) {
 
     return (
         <div className={classNames(prefixCls, className, { empty: list.length === 0 })} style={style}>
-            长度{list.length}
-            {list.length > 0 ? list[0].percent : null}
             {list.map((x) => (
                 <UploadFrame key={x.file.uid} result={x} isImg={isImageUrl(x.file.name)} icons={icons} onView={onView} onRemove={onRemoveHandle} />
             ))}
@@ -138,7 +145,6 @@ function UploadList(props: UploadListProps) {
                 <UploadButton
                     key="upload-btn"
                     {...rest}
-                    test={list}
                     btnMode={true}
                     onStart={onStartHandle}
                     onSuccess={onSuccessHandle}

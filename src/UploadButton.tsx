@@ -22,14 +22,11 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
         onRemove,
         onView,
         btnMode = false,
-        test,
         ...rest
     } = props;
     const [result, setResult] = useState<UploadResult>({
         status: "ready",
     });
-
-    console.log("render --- test", test);
 
     function onStartHandle(file: FileExtend) {
         if (!btnMode) {
@@ -40,7 +37,6 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
                 percent: 0,
             });
         }
-        console.log("开始上传", test);
         if (onStart) {
             onStart(file);
         }
@@ -50,7 +46,6 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
         if (!btnMode) {
             setResult({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
         }
-        console.log("上传成功", test);
         if (onSuccess) {
             onSuccess(file, response, xhr);
         }

@@ -166,7 +166,6 @@ export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
      * 不显示上传状态
      */
     btnMode?: boolean;
-    test?: any;
 }
 
 export type UploadActionClick = (result?: UploadResult) => void;
