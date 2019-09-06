@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.3 (Fri Sep 06 2019)
+
+-   增加`UploadButton`, `UploadFrame`, `UploadList`组件
+-   用奇怪的方式修复 UploadList 状态不同步
+
 ## 0.0.2 (Tue Sep 03 2019)
 
 -   清除控制台打印, 优化代码警告
