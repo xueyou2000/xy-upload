@@ -121,14 +121,13 @@ $UploadFrame: "upload-frame";
     position: absolute;
     width: 75%;
     top: 50%;
-    left: 14%;
+    left: 13px;
     z-index: 5;
 }
 .progress-outer {
     display: inline-block;
     width: 100%;
-    padding-right: calc(2em + 8px);
-    margin-right: calc(-2em - 8px);
+    padding-right: 4px;
 
     .progress-inner {
         display: inline-block;

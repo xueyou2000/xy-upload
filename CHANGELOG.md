@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.41 (Sat Sep 07 2019)
+
+-   修复上传进度条样式问题
+
 ## 0.0.4 (Sat Sep 07 2019)
 
 -   增加`UploadFrame`说明字段
