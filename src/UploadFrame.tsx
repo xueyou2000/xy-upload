@@ -6,7 +6,7 @@ import { UploadActionClick, UploadFrameProps, UploadResult } from "./interface";
 
 function UploadFrame(props: UploadFrameProps) {
     const { prefixCls = "upload-frame", className, style, isImg = false, result = {}, icons, onView, onRemove } = props;
-    const { status = "success", percent = 0 } = result;
+    const { status = "success", percent = 0, desc } = result;
 
     function progress() {
         return (
@@ -79,6 +79,7 @@ function UploadFrame(props: UploadFrameProps) {
                     </div>
                 )}
             </div>
+            {desc && <div className={`${prefixCls}_text`}>{desc}</div>}
         </div>
     );
 }

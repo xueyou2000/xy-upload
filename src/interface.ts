@@ -73,6 +73,10 @@ export interface UploadResult {
      * 上传状态
      */
     status?: UploadStatus;
+    /**
+     * 说明
+     */
+    desc?: React.ReactNode;
 }
 
 export interface UploadProps<ResType = any> {

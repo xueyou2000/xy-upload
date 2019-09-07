@@ -3,6 +3,7 @@ $UploadFrame: "upload-frame";
 .#{$UploadFrame} {
     display: inline-block;
     position: relative;
+    vertical-align: top;
 
     &:hover {
         .#{$UploadFrame}_info:before,
@@ -78,6 +79,9 @@ $UploadFrame: "upload-frame";
 }
 .#{$UploadFrame}_text {
     text-align: center;
+    margin-top: 5px;
+    color: #333;
+    font-size: 12px;
 }
 .#{$UploadFrame}_badge {
     position: absolute;

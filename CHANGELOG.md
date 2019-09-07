@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.4 (Sat Sep 07 2019)
+
+-   增加`UploadFrame`说明字段
+
 ## 0.0.3 (Fri Sep 06 2019)
 
 -   增加`UploadButton`, `UploadFrame`, `UploadList`组件
