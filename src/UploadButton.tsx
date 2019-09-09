@@ -1,13 +1,14 @@
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import classNames from "classnames";
-import React, { useState } from "react";
-import { FileExtend, UploadButtonProps, UploadResult, UploadFrameProps } from "./interface";
+import React from "react";
+import { useControll } from "utils-hooks";
+import { FileExtend, UploadButtonProps, UploadFrameProps, UploadResult } from "./interface";
 import Upload from "./Upload";
 import UploadFrame from "./UploadFrame";
 import { isImageUrl } from "./utils";
 
-function UploadButton(props: UploadButtonProps & UploadFrameProps) {
+const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFrameProps, ref: React.MutableRefObject<any>) => {
     const {
         prefixCls = "upload-button",
         className,
@@ -15,6 +16,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
         title = "上传",
         children,
         beforeUpload,
+        onChange,
         onStart,
         onSuccess,
         onError,
@@ -24,13 +26,21 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
         btnMode = false,
         ...rest
     } = props;
-    const [result, setResult] = useState<UploadResult>({
-        status: "ready",
-    });
+
+    const [result, setResult, isControll] = useControll<UploadResult>(props, "value", "defaultValue", { status: "ready" });
+
+    function change(state: UploadResult) {
+        if (!isControll) {
+            setResult(state);
+        }
+        if (onChange) {
+            onChange(state);
+        }
+    }
 
     function onStartHandle(file: FileExtend) {
         if (!btnMode) {
-            setResult({
+            change({
                 status: "uploading",
                 file: file,
                 thumbnail: URL.createObjectURL(file),
@@ -44,7 +54,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
 
     function onSuccessHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
         if (!btnMode) {
-            setResult({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
         }
         if (onSuccess) {
             onSuccess(file, response, xhr);
@@ -53,7 +63,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
 
     function onErrorHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
         if (!btnMode) {
-            setResult({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
         }
         if (onError) {
             onError(file, response, xhr);
@@ -62,7 +72,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
 
     function onProgressHandle(file: FileExtend, percent: number, event: ProgressEvent) {
         if (!btnMode) {
-            setResult({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
         }
         if (onProgress) {
             onProgress(file, percent, event);
@@ -71,7 +81,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
 
     function onRemoveHandle(result: UploadResult) {
         if (!btnMode) {
-            setResult({
+            change({
                 status: "ready",
             });
         }
@@ -81,7 +91,7 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
     }
 
     return (
-        <div className={classNames(prefixCls, className)} style={style}>
+        <div className={classNames(prefixCls, className)} style={style} ref={ref}>
             {result.status === "ready" ? (
                 <Upload
                     className="upload-button-wrapper"
@@ -112,6 +122,6 @@ function UploadButton(props: UploadButtonProps & UploadFrameProps) {
             <div>{children}</div>
         </div>
     );
-}
+});
 
 export default React.memo(UploadButton);

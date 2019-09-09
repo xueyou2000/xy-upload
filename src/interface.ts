@@ -170,6 +170,9 @@ export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
      * 不显示上传状态
      */
     btnMode?: boolean;
+    value?: UploadResult;
+    defaultValue?: UploadResult;
+    onChange?: (result: UploadResult) => void;
 }
 
 export type UploadActionClick = (result?: UploadResult) => void;
@@ -211,4 +214,39 @@ export interface UploadFrameProps {
      * 内置删除按钮事件
      */
     onRemove?: UploadActionClick;
+}
+
+export interface UploadListProps extends UploadProps, UploadFrameProps {
+    /**
+     * 附加类名
+     */
+    prefixCls?: string;
+    /**
+     * 根节点的附加类名
+     */
+    className?: string;
+    /**
+     * 内联样式
+     */
+    style?: React.CSSProperties;
+    /**
+     * 是否禁用上传
+     */
+    disabledUpload?: boolean;
+    /**
+     * 最大上传数量
+     */
+    maxUpload?: number;
+    /**
+     * 上传值
+     */
+    value?: UploadResult[];
+    /**
+     * 默认上传值
+     */
+    defaultValue?: UploadResult[];
+    /**
+     * 上传值更改
+     */
+    onChange?: (list: UploadResult[]) => void;
 }

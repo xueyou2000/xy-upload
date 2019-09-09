@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.5 (Mon Sep 09 2019)
+
+-   传递`ref`选项
+-   `UploadButton`增加受控值
+
 ## 0.0.41 (Sat Sep 07 2019)
 
 -   修复上传进度条样式问题

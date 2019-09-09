@@ -1,47 +1,12 @@
-import React, { useRef, useState, useCallback, useEffect } from "react";
 import classNames from "classnames";
-import { FileExtend, UploadButtonProps, UploadResult, UploadFrameProps, UploadProps } from "./interface";
-import { useControll, useMount, DefineDefaultValue, useForceUpdate } from "utils-hooks";
+import React, { useEffect, useRef } from "react";
+import { DefineDefaultValue, useForceUpdate } from "utils-hooks";
 import { UploadFrame } from ".";
-import { isImageUrl } from "./utils";
+import { FileExtend, UploadListProps, UploadResult } from "./interface";
 import UploadButton from "./UploadButton";
+import { isImageUrl } from "./utils";
 
-export interface UploadListProps extends UploadProps, UploadFrameProps {
-    /**
-     * 附加类名
-     */
-    prefixCls?: string;
-    /**
-     * 根节点的附加类名
-     */
-    className?: string;
-    /**
-     * 内联样式
-     */
-    style?: React.CSSProperties;
-    /**
-     * 是否禁用上传
-     */
-    disabledUpload?: boolean;
-    /**
-     * 最大上传数量
-     */
-    maxUpload?: number;
-    /**
-     * 上传值
-     */
-    value?: UploadResult[];
-    /**
-     * 默认上传值
-     */
-    defaultValue?: UploadResult[];
-    /**
-     * 上传值更改
-     */
-    onChange?: (list: UploadResult[]) => void;
-}
-
-function UploadList(props: UploadListProps) {
+const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableRefObject<any>) => {
     const {
         prefixCls = "upload-list",
         className,
@@ -137,7 +102,7 @@ function UploadList(props: UploadListProps) {
     }
 
     return (
-        <div className={classNames(prefixCls, className, { empty: list.length === 0 })} style={style}>
+        <div className={classNames(prefixCls, className, { empty: list.length === 0 })} style={style} ref={ref}>
             {list.map((x) => (
                 <UploadFrame key={x.file.uid} result={x} isImg={isImageUrl(x.file.name)} icons={icons} onView={onView} onRemove={onRemoveHandle} />
             ))}
@@ -154,5 +119,5 @@ function UploadList(props: UploadListProps) {
             )}
         </div>
     );
-}
+});
 export default React.memo(UploadList);
