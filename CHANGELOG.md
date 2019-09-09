@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.51 (Mon Sep 09 2019)
+
+-   修复`useControll`导致的默认值为空问题
+
 ## 0.0.5 (Mon Sep 09 2019)
 
 -   传递`ref`选项

@@ -27,7 +27,10 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
         ...rest
     } = props;
 
-    const [result, setResult, isControll] = useControll<UploadResult>(props, "value", "defaultValue", { status: "ready" });
+    let [result, setResult, isControll] = useControll<UploadResult>(props, "value", "defaultValue", { status: "ready" });
+    if (!result) {
+        result = { status: "ready" };
+    }
 
     function change(state: UploadResult) {
         if (!isControll) {
