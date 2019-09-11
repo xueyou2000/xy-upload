@@ -103,8 +103,8 @@ const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableR
 
     return (
         <div className={classNames(prefixCls, className, { empty: list.length === 0 })} style={style} ref={ref}>
-            {list.map((x) => (
-                <UploadFrame key={x.file.uid} result={x} isImg={isImageUrl(x.file.name)} icons={icons} onView={onView} onRemove={onRemoveHandle} />
+            {list.map((x, i) => (
+                <UploadFrame key={i} result={x} icons={icons} onView={onView} onRemove={onRemoveHandle} disabledUpload={disabledUpload} />
             ))}
             {disabledUpload || list.length >= maxUpload ? null : (
                 <UploadButton

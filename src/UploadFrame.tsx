@@ -5,8 +5,8 @@ import { faFileUpload, faEye, faTrashAlt } from "@fortawesome/free-solid-svg-ico
 import { UploadActionClick, UploadFrameProps, UploadResult } from "./interface";
 
 function UploadFrame(props: UploadFrameProps) {
-    const { prefixCls = "upload-frame", className, style, isImg = false, result = {}, icons, onView, onRemove } = props;
-    const { status = "success", percent = 0, desc } = result;
+    const { prefixCls = "upload-frame", className, style, result = {}, icons, onView, onRemove, disabledUpload } = props;
+    const { status = "success", percent = 0, desc, isImg = true } = result;
 
     function progress() {
         return (
@@ -35,7 +35,7 @@ function UploadFrame(props: UploadFrameProps) {
 
     return (
         <div className={classNames(prefixCls, className, `${prefixCls}-status-${status}`)} style={style}>
-            <div className={`${prefixCls}_badge`}>{statusText()}</div>
+            {!disabledUpload && <div className={`${prefixCls}_badge`}>{statusText()}</div>}
             <div className={`${prefixCls}_wrapper`}>
                 <div className={`${prefixCls}_info`}>
                     {isImg ? (
@@ -65,15 +65,17 @@ function UploadFrame(props: UploadFrameProps) {
                                         <FontAwesomeIcon title="预览文件" className={`${prefixCls}_action`} icon={faEye} />
                                     </span>
                                 )}
-                                <span
-                                    onClick={() => {
-                                        if (onRemove) {
-                                            onRemove(result);
-                                        }
-                                    }}
-                                >
-                                    <FontAwesomeIcon title="删除文件" className={`${prefixCls}_action`} icon={faTrashAlt} />{" "}
-                                </span>
+                                {!disabledUpload && (
+                                    <span
+                                        onClick={() => {
+                                            if (onRemove) {
+                                                onRemove(result);
+                                            }
+                                        }}
+                                    >
+                                        <FontAwesomeIcon title="删除文件" className={`${prefixCls}_action`} icon={faTrashAlt} />{" "}
+                                    </span>
+                                )}
                             </React.Fragment>
                         )}
                     </div>

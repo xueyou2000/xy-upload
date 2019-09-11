@@ -24,11 +24,11 @@ export default function() {
         console.log("上传进度", percent);
     }
 
-    const result: UploadResult = { status: "success", percent: 30, thumbnail: "https://cdn4.buysellads.net/uu/1/3386/1525189943-38523.png" };
+    const result: UploadResult = { thumbnail: "https://cdn4.buysellads.net/uu/1/3386/1525189943-38523.png" };
 
     return (
         <div>
-            <UploadList action="/boss/file/file/uploadFile" data={{ busiType: "COMPANY_ENTER_NET" }} />
+            <UploadList value={[result]} disabledUpload={true} action="/boss/file/file/uploadFile" data={{ busiType: "COMPANY_ENTER_NET" }} />
         </div>
     );
 }

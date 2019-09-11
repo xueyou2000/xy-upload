@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.0.52 (Wed Sep 11 2019)
+
+-   将`isImg`移入`UploadResult`类型中
+-   禁用状态下，不显示删除按钮
+
 ## 0.0.51 (Mon Sep 09 2019)
 
 -   修复`useControll`导致的默认值为空问题

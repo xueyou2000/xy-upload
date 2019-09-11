@@ -77,6 +77,10 @@ export interface UploadResult {
      * 说明
      */
     desc?: React.ReactNode;
+    /**
+     * 是否为图片
+     */
+    isImg?: boolean;
 }
 
 export interface UploadProps<ResType = any> {
@@ -195,10 +199,6 @@ export interface UploadFrameProps {
      */
     children?: React.ReactNode;
     /**
-     * 是否为图片
-     */
-    isImg?: boolean;
-    /**
      * 上传结果
      */
     result?: UploadResult;
@@ -214,6 +214,10 @@ export interface UploadFrameProps {
      * 内置删除按钮事件
      */
     onRemove?: UploadActionClick;
+    /**
+     * 是否禁用上传
+     */
+    disabledUpload?: boolean;
 }
 
 export interface UploadListProps extends UploadProps, UploadFrameProps {

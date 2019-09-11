@@ -48,6 +48,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
                 file: file,
                 thumbnail: URL.createObjectURL(file),
                 percent: 0,
+                isImg: isImageUrl(file.name),
             });
         }
         if (onStart) {
@@ -57,7 +58,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
 
     function onSuccessHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
         if (!btnMode) {
-            change({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "success", percent: 100, response, isImg: isImageUrl(file.name) });
         }
         if (onSuccess) {
             onSuccess(file, response, xhr);
@@ -66,7 +67,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
 
     function onErrorHandle(file: FileExtend, response: any, xhr: XMLHttpRequest) {
         if (!btnMode) {
-            change({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "error", percent: 100, response, isImg: isImageUrl(file.name) });
         }
         if (onError) {
             onError(file, response, xhr);
@@ -75,7 +76,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
 
     function onProgressHandle(file: FileExtend, percent: number, event: ProgressEvent) {
         if (!btnMode) {
-            change({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent });
+            change({ file, thumbnail: URL.createObjectURL(file), status: "uploading", percent, isImg: isImageUrl(file.name) });
         }
         if (onProgress) {
             onProgress(file, percent, event);
@@ -114,13 +115,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
                     </div>
                 </Upload>
             ) : (
-                <UploadFrame
-                    result={result}
-                    isImg={result.file ? isImageUrl(result.file.name) : false}
-                    icons={props.icons}
-                    onView={onView}
-                    onRemove={onRemoveHandle}
-                ></UploadFrame>
+                <UploadFrame result={result} icons={props.icons} onView={onView} onRemove={onRemoveHandle}></UploadFrame>
             )}
             <div>{children}</div>
         </div>
