@@ -15,7 +15,6 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
         style,
         title = "上传",
         children,
-        beforeUpload,
         onChange,
         onStart,
         onSuccess,

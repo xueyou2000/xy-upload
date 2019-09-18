@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.53 (Wed Sep 18 2019)
+
+-   修复`UploadButton`漏传`beforeUpload`属性
+
 ## 0.0.52 (Wed Sep 11 2019)
 
 -   将`isImg`移入`UploadResult`类型中
