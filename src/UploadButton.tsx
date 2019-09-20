@@ -114,7 +114,7 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
                     </div>
                 </Upload>
             ) : (
-                <UploadFrame result={result} icons={props.icons} onView={onView} onRemove={onRemoveHandle}></UploadFrame>
+                <UploadFrame result={result} disabledUpload={props.disabled} icons={props.icons} onView={onView} onRemove={onRemoveHandle}></UploadFrame>
             )}
             <div>{children}</div>
         </div>

@@ -1,6 +1,6 @@
 {
     "name": "xy-upload",
-    "version": "0.0.53",
+    "version": "0.0.54",
     "description": "基于 React Hooks 的上传组件",
     "types": "es/index.d.ts",
     "main": "es/index.js",
