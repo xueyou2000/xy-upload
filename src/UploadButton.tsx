@@ -9,22 +9,7 @@ import UploadFrame from "./UploadFrame";
 import { isImageUrl } from "./utils";
 
 const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFrameProps, ref: React.MutableRefObject<any>) => {
-    const {
-        prefixCls = "upload-button",
-        className,
-        style,
-        title = "上传",
-        children,
-        onChange,
-        onStart,
-        onSuccess,
-        onError,
-        onProgress,
-        onRemove,
-        onView,
-        btnMode = false,
-        ...rest
-    } = props;
+    const { prefixCls = "upload-button", className, style, title = "上传", custBtn, children, onChange, onStart, onSuccess, onError, onProgress, onRemove, onView, btnMode = false, ...rest } = props;
 
     let [result, setResult, isControll] = useControll<UploadResult>(props, "value", "defaultValue", { status: "ready" });
     if (!result) {
@@ -96,22 +81,17 @@ const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFramePro
     return (
         <div className={classNames(prefixCls, className)} style={style} ref={ref}>
             {result.status === "ready" ? (
-                <Upload
-                    className="upload-button-wrapper"
-                    {...rest}
-                    onStart={onStartHandle}
-                    onSuccess={onSuccessHandle}
-                    onError={onErrorHandle}
-                    onProgress={onProgressHandle}
-                >
-                    <div className={`${prefixCls}-inner`}>
-                        <div>
-                            <p className="upload-icon">
-                                <FontAwesomeIcon icon={faPlus} />
-                            </p>
-                            <p className="upload-title">{title}</p>
+                <Upload className="upload-button-wrapper" {...rest} onStart={onStartHandle} onSuccess={onSuccessHandle} onError={onErrorHandle} onProgress={onProgressHandle}>
+                    {custBtn || (
+                        <div className={`${prefixCls}-inner`}>
+                            <div>
+                                <p className="upload-icon">
+                                    <FontAwesomeIcon icon={faPlus} />
+                                </p>
+                                <p className="upload-title">{title}</p>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </Upload>
             ) : (
                 <UploadFrame result={result} disabledUpload={props.disabled} icons={props.icons} onView={onView} onRemove={onRemoveHandle}></UploadFrame>

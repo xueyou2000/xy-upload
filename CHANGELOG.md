@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.0.56 (Fri Nov 01 2019)
+
+-   紧急修复`xy-manual-tools`,`quick-react-scripts`版本
+
+## 0.0.55 (Fri Nov 01 2019)
+
+-   `UploadButton`增加`custBtn`自定义上传按钮
+
 ## 0.0.54 (Fri Sep 20 2019)
 
 -   修复`UploadButton`漏传`disabledUpload`属性

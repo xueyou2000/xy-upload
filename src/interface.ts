@@ -170,6 +170,10 @@ export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
      */
     title?: React.ReactNode;
     /**
+     * 自定义上传按钮
+     */
+    custBtn?: React.ReactNode;
+    /**
      * 是否仅按钮模式
      * 不显示上传状态
      */
