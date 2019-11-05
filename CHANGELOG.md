@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.0.57 (Tue Nov 05 2019)
+
+-   修复`Upload`上传`onStart`参数没有判断空就调用的问题
+
 ## 0.0.56 (Fri Nov 01 2019)
 
 -   紧急修复`xy-manual-tools`,`quick-react-scripts`版本
