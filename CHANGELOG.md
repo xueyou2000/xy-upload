@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.1.0 (Tue Nov 19 2019)
+
+-   修复`react`与`react-dom`版本不一致导致的问题
+-   测试库迁移到`@testing-library/react"`
+
 ## 0.0.57 (Tue Nov 05 2019)
 
 -   修复`Upload`上传`onStart`参数没有判断空就调用的问题
