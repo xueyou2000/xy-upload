@@ -12,3 +12,7 @@ declare namespace React {
         name?: string;
     }
 }
+
+interface Window {
+    GlobalComponentLocal?: typeof import("./local/zh").default;
+}

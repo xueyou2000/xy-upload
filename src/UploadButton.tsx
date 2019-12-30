@@ -4,12 +4,13 @@ import classNames from "classnames";
 import React from "react";
 import { useControll } from "utils-hooks";
 import { FileExtend, UploadButtonProps, UploadFrameProps, UploadResult } from "./interface";
+import { getLocal } from "./local";
 import Upload from "./Upload";
 import UploadFrame from "./UploadFrame";
 import { isImageUrl } from "./utils";
 
 const UploadButton = React.forwardRef((props: UploadButtonProps & UploadFrameProps, ref: React.MutableRefObject<any>) => {
-    const { prefixCls = "upload-button", className, style, title = "上传", custBtn, children, onChange, onStart, onSuccess, onError, onProgress, onRemove, onView, btnMode = false, ...rest } = props;
+    const { prefixCls = "upload-button", className, style, title = getLocal().Upload.title, custBtn, children, onChange, onStart, onSuccess, onError, onProgress, onRemove, onView, btnMode = false, ...rest } = props;
 
     let [result, setResult, isControll] = useControll<UploadResult>(props, "value", "defaultValue", { status: "ready" });
     if (!result) {

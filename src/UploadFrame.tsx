@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
-import classNames from "classnames";
+import { faEye, faFileUpload, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faFileUpload, faEye, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import { UploadActionClick, UploadFrameProps, UploadResult } from "./interface";
+import classNames from "classnames";
+import React from "react";
+import { UploadFrameProps } from "./interface";
+import { getLocal } from "./local";
 
 function UploadFrame(props: UploadFrameProps) {
     const { prefixCls = "upload-frame", className, style, result = {}, icons, onView, onRemove, disabledUpload } = props;
@@ -21,15 +22,16 @@ function UploadFrame(props: UploadFrameProps) {
     }
 
     function statusText() {
+        const LocalStatus = getLocal().Upload.status;
         switch (status) {
             case "error":
-                return "上传失败";
+                return LocalStatus.error;
             case "success":
-                return "上传成功";
+                return LocalStatus.success;
             case "uploading":
-                return "上传中...";
+                return LocalStatus.uploading;
             default:
-                return "开始上传";
+                return LocalStatus.ready;
         }
     }
 
@@ -62,7 +64,7 @@ function UploadFrame(props: UploadFrameProps) {
                                             }
                                         }}
                                     >
-                                        <FontAwesomeIcon title="预览文件" className={`${prefixCls}_action`} icon={faEye} />
+                                        <FontAwesomeIcon title={getLocal().Upload.preview} className={`${prefixCls}_action`} icon={faEye} />
                                     </span>
                                 )}
                                 {!disabledUpload && (
@@ -73,7 +75,7 @@ function UploadFrame(props: UploadFrameProps) {
                                             }
                                         }}
                                     >
-                                        <FontAwesomeIcon title="删除文件" className={`${prefixCls}_action`} icon={faTrashAlt} />{" "}
+                                        <FontAwesomeIcon title={getLocal().Upload.delete} className={`${prefixCls}_action`} icon={faTrashAlt} />
                                     </span>
                                 )}
                             </React.Fragment>

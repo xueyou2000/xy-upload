@@ -42,7 +42,7 @@ export default function upload<T>(options: UploadOptions<T>): UploadReturn {
     };
 
     xhr.onabort = (ev: ProgressEvent) => {
-        console.log("中断", ev);
+        console.log("上传中断", ev);
     };
 
     if (opt.onProgress && xhr.upload) {

@@ -1,6 +1,7 @@
 import React from "react";
 import { render, fireEvent } from "@testing-library/react";
 import { Upload } from "../src";
+import Zh from "../src/local/zh";
 
 describe("Upload", () => {
     test("render", () => {
@@ -9,7 +10,7 @@ describe("Upload", () => {
                 <button>上传</button>
             </Upload>,
         );
-        const btn = wrapper.getByText("上传");
+        const btn = wrapper.getByText(Zh.Upload.title);
         const input = btn.previousElementSibling as HTMLInputElement;
 
         expect(input.name).toBe("file2");

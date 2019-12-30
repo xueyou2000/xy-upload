@@ -4,27 +4,9 @@ import { DefineDefaultValue, useForceUpdate } from "utils-hooks";
 import { UploadFrame } from ".";
 import { FileExtend, UploadListProps, UploadResult } from "./interface";
 import UploadButton from "./UploadButton";
-import { isImageUrl } from "./utils";
 
 const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableRefObject<any>) => {
-    const {
-        prefixCls = "upload-list",
-        className,
-        style,
-        disabledUpload = false,
-        maxUpload = 10,
-        value,
-        defaultValue,
-        onChange,
-        icons,
-        onView,
-        onRemove,
-        onStart,
-        onSuccess,
-        onError,
-        onProgress,
-        ...rest
-    } = props;
+    const { prefixCls = "upload-list", className, style, disabledUpload = false, maxUpload = 10, value, defaultValue, onChange, icons, onView, onRemove, onStart, onSuccess, onError, onProgress, ...rest } = props;
     const listRef = useRef<UploadResult[]>(DefineDefaultValue(props, "value", "defaultValue") || []);
     const list = listRef.current;
     // const [list, setList] = useState<UploadResult[]>(listRef.current);
@@ -106,17 +88,7 @@ const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableR
             {list.map((x, i) => (
                 <UploadFrame key={i} result={x} icons={icons} onView={onView} onRemove={onRemoveHandle} disabledUpload={disabledUpload} />
             ))}
-            {disabledUpload || list.length >= maxUpload ? null : (
-                <UploadButton
-                    key="upload-btn"
-                    {...rest}
-                    btnMode={true}
-                    onStart={onStartHandle}
-                    onSuccess={onSuccessHandle}
-                    onError={onErrorHandle}
-                    onProgress={onProgressHandle}
-                />
-            )}
+            {disabledUpload || list.length >= maxUpload ? null : <UploadButton key="upload-btn" {...rest} btnMode={true} onStart={onStartHandle} onSuccess={onSuccessHandle} onError={onErrorHandle} onProgress={onProgressHandle} />}
         </div>
     );
 });
