@@ -5,11 +5,31 @@ import { attrAccept, createUid, getValue } from "./utils";
 import traverseFileTree from "./TraverseFileTree";
 import { useUnmount } from "utils-hooks";
 import httpUpload from "./HttpUpload";
+import compress from "./Compress";
 
 const HideStyle: React.CSSProperties = { display: "none" };
 
 function Upload(props: UploadProps) {
-    const { prefixCls = "xy-upload", className, directory, style, accept, beforeUpload, customRequest, disabled, multiple = false, name = "file", withCredentials, headers, onStart, onSuccess, onError, onProgress, children } = props;
+    const {
+        prefixCls = "xy-upload",
+        className,
+        directory,
+        style,
+        accept,
+        beforeUpload,
+        customRequest,
+        disabled,
+        multiple = false,
+        name = "file",
+        withCredentials,
+        headers,
+        onStart,
+        onSuccess,
+        onError,
+        onProgress,
+        children,
+        options,
+    } = props;
     const ref = useRef(null);
     // 唯一得 uid，用于重置input.files, 让其触发后续同一文件得onChange事件
     const [uid, setUid] = useState(createUid());
@@ -53,35 +73,38 @@ function Upload(props: UploadProps) {
         const data = getValue(props.data, [file]);
         const action = getValue(props.action, [file]);
 
-        return new Promise((resolve, reject) => {
-            const request = customRequest || httpUpload;
-            if (onStart) {
-                onStart(file);
-            }
-            request({
-                file,
-                data,
-                action,
-                headers,
-                filename: name,
-                withCredentials,
-                onSuccess: (response, xhr) => {
-                    if (onSuccess) {
-                        onSuccess(file, response, xhr);
-                    }
-                    resolve(response);
-                },
-                onError: (error, response) => {
-                    if (onError) {
-                        onError(file, error, response);
-                    }
-                    reject(error);
-                },
-                onProgress: (percent, event) => {
-                    if (onProgress) {
-                        onProgress(file, percent, event);
-                    }
-                },
+        return compress(file, options).then((fileUploadRaw) => {
+            console.log("fileUploadRaw", fileUploadRaw);
+            return new Promise((resolve, reject) => {
+                const request = customRequest || httpUpload;
+                if (onStart) {
+                    onStart(file);
+                }
+                request({
+                    file: fileUploadRaw as any,
+                    data,
+                    action,
+                    headers,
+                    filename: name,
+                    withCredentials,
+                    onSuccess: (response, xhr) => {
+                        if (onSuccess) {
+                            onSuccess(file, response, xhr);
+                        }
+                        resolve(response);
+                    },
+                    onError: (error, response) => {
+                        if (onError) {
+                            onError(file, error, response);
+                        }
+                        reject(error);
+                    },
+                    onProgress: (percent, event) => {
+                        if (onProgress) {
+                            onProgress(file, percent, event);
+                        }
+                    },
+                });
             });
         });
     }
@@ -127,7 +150,11 @@ function Upload(props: UploadProps) {
         }
 
         if (directory) {
-            traverseFileTree(e.dataTransfer.items, (files) => uploadFiles(files), (_file) => attrAccept(_file, accept));
+            traverseFileTree(
+                e.dataTransfer.items,
+                (files) => uploadFiles(files),
+                (_file) => attrAccept(_file, accept),
+            );
         } else {
             const files = Array.prototype.slice.call(e.dataTransfer.files).filter((file: File) => attrAccept(file, accept));
             uploadFiles(files);

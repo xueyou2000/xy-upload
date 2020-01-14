@@ -27,14 +27,15 @@ export default function() {
     return (
         <div>
             <Upload
-                action="/upload.do"
+                action="/file/upload"
                 data={{ a: 1, b: 2 }}
-                headers={{ authorization: "xxx" }}
+                // headers={{ authorization: "xxx" }}
                 beforeUpload={beforeUpload}
                 onStart={onStart}
                 onSuccess={onSuccess}
                 onError={onError}
                 onProgress={onProgress}
+                options={{ compress: true, quality: 0.3 }}
             >
                 <button>上传</button>
             </Upload>

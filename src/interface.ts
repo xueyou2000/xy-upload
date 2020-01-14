@@ -162,6 +162,10 @@ export interface UploadProps<ResType = any> {
      * 上传进度事件
      */
     onProgress?: (file: FileExtend, percent: number, event: ProgressEvent) => void;
+    /**
+     * 压缩选项
+     */
+    options?: CompressOptions;
 }
 
 export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
@@ -257,4 +261,32 @@ export interface UploadListProps extends UploadProps, UploadFrameProps {
      * 上传值更改
      */
     onChange?: (list: UploadResult[]) => void;
+}
+
+/**
+ * 压缩选项
+ */
+export interface CompressOptions {
+    /**
+     * 上传类型
+     * `file`为文件上传; `base64`为以base64上传
+     */
+    type?: "file" | "base64";
+    /**
+     * 是否压缩
+     */
+    compress?: boolean;
+    /**
+     * 图片最大宽度
+     */
+    width?: number;
+    /**
+     * 图片最大高度
+     */
+    height?: number;
+    /**
+     * 压缩质量
+     * 取值范围 0 ~ 1
+     */
+    quality?: number;
 }
