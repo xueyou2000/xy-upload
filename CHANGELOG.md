@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.3.1 (Fri Jun 05 2020)
+
+-   修复`UploadList`在 value 动态变化没有刷新问题
+-   `onView`, `onRemove`增加`list`参数
+
 ## 0.2.0 (Mon Dec 30 2019)
 
 -   统一国际化实现

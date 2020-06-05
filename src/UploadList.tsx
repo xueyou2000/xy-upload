@@ -24,6 +24,7 @@ const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableR
         if (value) {
             listRef.current = value;
             // setList(value);
+            update();
         }
     }, [value]);
 
@@ -86,7 +87,7 @@ const UploadList = React.forwardRef((props: UploadListProps, ref: React.MutableR
     return (
         <div className={classNames(prefixCls, className, { empty: list.length === 0 })} style={style} ref={ref}>
             {list.map((x, i) => (
-                <UploadFrame key={i} result={x} icons={icons} onView={onView} onRemove={onRemoveHandle} disabledUpload={disabledUpload} />
+                <UploadFrame list={list} index={i} key={i} result={x} icons={icons} onView={onView} onRemove={onRemoveHandle} disabledUpload={disabledUpload} />
             ))}
             {disabledUpload || list.length >= maxUpload ? null : <UploadButton key="upload-btn" {...rest} btnMode={true} onStart={onStartHandle} onSuccess={onSuccessHandle} onError={onErrorHandle} onProgress={onProgressHandle} />}
         </div>

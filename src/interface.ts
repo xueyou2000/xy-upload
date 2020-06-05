@@ -187,7 +187,7 @@ export interface UploadButtonProps<ResType = any> extends UploadProps<ResType> {
     onChange?: (result: UploadResult) => void;
 }
 
-export type UploadActionClick = (result?: UploadResult) => void;
+export type UploadActionClick = (result?: UploadResult, index?: number, list?: UploadResult[]) => void;
 
 export interface UploadFrameProps {
     /**
@@ -226,6 +226,14 @@ export interface UploadFrameProps {
      * 是否禁用上传
      */
     disabledUpload?: boolean;
+    /**
+     * 当前文件数组
+     */
+    list?: UploadResult[];
+    /**
+     * 当前索引
+     */
+    index?: number;
 }
 
 export interface UploadListProps extends UploadProps, UploadFrameProps {

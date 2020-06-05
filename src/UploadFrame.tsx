@@ -6,7 +6,7 @@ import { UploadFrameProps } from "./interface";
 import { getLocal } from "./local";
 
 function UploadFrame(props: UploadFrameProps) {
-    const { prefixCls = "upload-frame", className, style, result = {}, icons, onView, onRemove, disabledUpload } = props;
+    const { prefixCls = "upload-frame", className, style, result = {}, icons, onView, onRemove, disabledUpload, list, index } = props;
     const { status = "success", percent = 0, desc, isImg = true } = result;
 
     function progress() {
@@ -60,7 +60,7 @@ function UploadFrame(props: UploadFrameProps) {
                                     <span
                                         onClick={() => {
                                             if (onView) {
-                                                onView(result);
+                                                onView(result, index, list);
                                             }
                                         }}
                                     >
@@ -71,7 +71,7 @@ function UploadFrame(props: UploadFrameProps) {
                                     <span
                                         onClick={() => {
                                             if (onRemove) {
-                                                onRemove(result);
+                                                onRemove(result, index, list);
                                             }
                                         }}
                                     >
